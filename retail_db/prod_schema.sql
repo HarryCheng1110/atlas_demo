@@ -27,7 +27,8 @@ CREATE TABLE "public"."customers" (
     "last_name" VARCHAR(100) NOT NULL,
     "email" VARCHAR(255) UNIQUE NOT NULL,
     "phone" VARCHAR(20),
-    "created_at" TIMESTAMP DEFAULT NOW() NOT NULL
+    "created_at" TIMESTAMP DEFAULT NOW() NOT NULL,
+    "is_active" BOOLEAN DEFAULT TRUE NOT NULL
 );
 
 -- orders
@@ -52,6 +53,19 @@ CREATE TABLE "public"."order_items" (
     CONSTRAINT "fk_product" FOREIGN KEY ("product_id") REFERENCES "public"."products"("id")
 );
 
+-- product_reviews
+CREATE TABLE "public"."product_reviews" (
+    "id" SERIAL PRIMARY KEY,
+    "product_id" INTEGER NOT NULL,
+    "customer_id" INTEGER NOT NULL,
+    "rating" INTEGER CHECK (rating >= 1 AND rating <= 5),
+    "comment" TEXT,
+    "created_at" TIMESTAMP DEFAULT NOW() NOT NULL,
+    CONSTRAINT "fk_review_product" FOREIGN KEY ("product_id") REFERENCES "public"."products"("id"),
+    CONSTRAINT "fk_review_customer" FOREIGN KEY ("customer_id") REFERENCES "public"."customers"("id")
+);
+
 -- Create index for faster searching
 CREATE INDEX "idx_product_name" ON "public"."products" ("name");
 CREATE INDEX "idx_order_customer" ON "public"."orders" ("customer_id");
+CREATE INDEX "idx_review_product" ON "public"."product_reviews" ("product_id");
