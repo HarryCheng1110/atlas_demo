@@ -1,0 +1,2 @@
+-- Modify "customers" table
+ALTER TABLE "public"."customers" ADD COLUMN "is_active" boolean NOT NULL DEFAULT true;

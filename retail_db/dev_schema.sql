@@ -27,7 +27,8 @@ CREATE TABLE "public"."customers" (
     "last_name" VARCHAR(100) NOT NULL,
     "email" VARCHAR(255) UNIQUE NOT NULL,
     "phone" VARCHAR(20),
-    "created_at" TIMESTAMP DEFAULT NOW() NOT NULL
+    "created_at" TIMESTAMP DEFAULT NOW() NOT NULL,
+    "is_active" BOOLEAN DEFAULT TRUE NOT NULL
 );
 
 -- orders
